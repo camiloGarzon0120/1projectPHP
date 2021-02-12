@@ -8,7 +8,7 @@
 
 	<input type="email" placeholder="Email" name="emailRegistro" required>
 
-	<input type="submit" value="Enviar">
+	<input type="submit" value="Enviar" class="btn btn-block btn-success mt-3">
 
 </form>
 

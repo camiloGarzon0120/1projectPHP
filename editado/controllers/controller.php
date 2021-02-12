@@ -17,13 +17,11 @@ class MvcController{
 
 	public function enlacesPaginasController(){
 
-		if(isset( $_GET['action'])){
+		if(isset( $_GET['action'])) {
 			
 			$enlaces = $_GET['action'];
 		
-		}
-
-		else{
+		} else {
 
 			$enlaces = "index";
 		}
@@ -39,7 +37,7 @@ class MvcController{
 
 	public function registroUsuarioController(){
 
-		if(isset($_POST["usuarioRegistro"])){
+		if(isset($_POST["usuarioRegistro"])) {
 
 			$datosController = array("usuario" => $_POST["usuarioRegistro"], 
 							   	 	 "password" => $_POST["passwordRegistro"], 
@@ -47,26 +45,16 @@ class MvcController{
 
 			$respuesta = Datos::registroUsuarioModel($datosController, "usuarios");
 
-			if($respuesta == 'success'){
+			if($respuesta == 'success') {
 
 				header("location:index.php?action=ok");
 
-			}
-			else{
+			} else {
 
 				header("location:index.php");
 
 			}
-
 		}
-		else {
-
-			//arreglar esta parte del codigo para advertir cuando no exista la variable POST o este mal escrita
-
-			echo "Error, variable POST no existe";
-
-		}
-
 	}
 
 	#INGRESO DE USUARIOS
@@ -74,7 +62,7 @@ class MvcController{
 
 	public function ingresoUsuarioController(){
 
-		if(isset($_POST["usuarioIngreso"])){
+		if(isset($_POST["usuarioIngreso"])) {
 
 			$datosController = array("usuario" => $_POST["usuarioIngreso"], 
 							   	 	 "password" => $_POST["passwordIngreso"]);
@@ -84,16 +72,40 @@ class MvcController{
 			if ($respuesta["usuario"] == $_POST["usuarioIngreso"] && 
 				$respuesta["password"] == $_POST["passwordIngreso"]) {
 
+				session_start();
+				$_SESSION["validar"] = true;
+
 				header("location:index.php?action=usuarios");
 
-			}
-			else{
+			} else {
 
 				header("location:index.php?action=fallo");
 
 			}
 		}
 	}
+
+	#VISTA DE USUARIOS
+	#-------------------------------------
+
+	public function vistaUsuarioController(){
+
+		$respuesta = Datos::vistaUsuarioModel("usuarios");
+
+		foreach ($respuesta as $key => $value) {
+			
+			echo'<tr>
+					<td>'.$value["usuario"].'</td>
+					<td>'.$value["password"].'</td>
+					<td>'.$value["email"].'</td>
+					<td><button class="btn btn-sm btn-secondary">Editar</button></td>
+					<td><button class="btn btn-sm btn-danger ml-2">Borrar</button></td>
+				</tr>';
+		}
+	}
+	
+
+
 
 }
 
