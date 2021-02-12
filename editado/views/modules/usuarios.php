@@ -34,13 +34,26 @@ if(!$_SESSION["validar"]) {
 		
 		<?php 
 
-		$ingreso = new MvcController();
-		$ingreso -> vistaUsuarioController();
+		$vistaUsuario = new MvcController();
+		$vistaUsuario -> vistaUsuarioController();
+		$vistaUsuario -> borrarUsuarioController();
 
-		 ?>
+		?>
 		
 	</tbody>
 
-
-
 </table>
+
+<?php 
+
+if (isset($_GET["action"])) {
+
+	if ($_GET["action"] == 'cambio') {
+		
+		echo "Cambio exitoso!";
+
+	}
+
+}
+
+ ?>

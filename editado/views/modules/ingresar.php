@@ -22,7 +22,6 @@ if (isset($_GET["action"])) {
 		echo "Fallo al ingresar";
 
 	}
-
 }
 
 ?>

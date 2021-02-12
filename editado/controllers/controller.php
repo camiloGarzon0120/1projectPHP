@@ -98,13 +98,85 @@ class MvcController{
 					<td>'.$value["usuario"].'</td>
 					<td>'.$value["password"].'</td>
 					<td>'.$value["email"].'</td>
-					<td><button class="btn btn-sm btn-secondary">Editar</button></td>
-					<td><button class="btn btn-sm btn-danger ml-2">Borrar</button></td>
+					<td>
+						<a href="index.php?action=editar&id='.$value["id"].'">
+							<button class="btn btn-sm btn-secondary">Editar</button>
+						</a>
+					</td>
+					<td>
+						<a href="index.php?action=usuarios&idBorrar='.$value["id"].'">
+							<button class="btn btn-sm btn-danger ml-2">Borrar</button>
+						</a>
+					</td>
 				</tr>';
 		}
 	}
-	
 
+	#EDITAR USUARIO
+	#-------------------------------------
+
+	public function editarUsuarioController(){
+
+		$datosController = $_GET["id"];
+
+		$respuesta = Datos::editarUsuarioModel($datosController, "usuarios");
+
+		echo '<input type="hidden" value="'.$respuesta["id"].'" name="idEditar">
+
+			  <input type="text" value="'.$respuesta["usuario"].'" name="usuarioEditar" required>
+
+			  <input type="text" value="'.$respuesta["password"].'" name="passwordEditar" required>
+
+			  <input type="email" value="'.$respuesta["email"].'" name="emailEditar" required>
+
+			  <input type="submit" value="Actualizar" class="btn btn-block btn-warning">';
+
+	}
+	
+	#ACTUALIZAR USUARIO
+	#-------------------------------------
+
+	public function actualizarUsuarioController(){
+
+		if(isset($_POST["usuarioEditar"])) {
+
+			$datosController = array("id" => $_POST["idEditar"],
+									 "usuario" => $_POST["usuarioEditar"], 
+							   	 	 "password" => $_POST["passwordEditar"], 
+							   	 	 "email" => $_POST["emailEditar"]);
+
+			$respuesta = Datos::actualizarUsuarioModel($datosController, "usuarios");
+
+			if($respuesta == 'success') {
+
+				header("location:index.php?action=cambio");
+
+			} else {
+
+				header("location:index.php");
+
+			}
+		}
+	}
+
+	#BORRAR USUARIO
+	#-------------------------------------
+
+	public function borrarUsuarioController(){
+
+		if(isset($_GET["idBorrar"])) {
+
+			$datosController = $_GET["idBorrar"];
+
+			$respuesta = Datos::borrarUsuarioModel($datosController, "usuarios");
+
+			if($respuesta == "success") {
+
+				header("location:index.php?action=usuarios");
+
+			} 
+		}
+	}
 
 
 }

@@ -23,6 +23,12 @@ class Paginas{
 		
 		}
 
+		else if($enlaces == "cambio"){
+
+			$module =  "views/modules/usuarios.php";
+		
+		}
+
 		else if($enlaces == "fallo"){
 
 			$module =  "views/modules/ingresar.php";
